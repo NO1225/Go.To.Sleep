@@ -1,0 +1,83 @@
+﻿<Window x:Class="Go.To.Sleep.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Go.To.Sleep"
+        mc:Ignorable="d"
+        Title="Go To Sleep" MinHeight="600" MinWidth="400" Width="400">
+    <Grid MinWidth="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="500"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Annotaitons -->
+        <ItemsControl ItemsSource="{Binding Annotations}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Width="400"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter
+                        Property="Canvas.Left"
+                        Value="190"
+                        />
+                    <Setter
+                        Property="Canvas.Top"
+                        Value="60"
+                        />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="20" Height="30">
+                        <Grid.RenderTransform>
+                            <RotateTransform CenterX="10" CenterY="190" Angle="{Binding Angle, FallbackValue=90}"/>
+                        </Grid.RenderTransform>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Text}"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="."/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
+        <!-- Handle -->
+        <Canvas IsEnabled="{Binding Idle}" 
+            Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Thumb Margin="-150 -150 0 0" 
+                   Thumb.DragDelta="Thumb_DragDelta"
+                   Thumb.DragStarted="Thumb_DragStarted"
+                   >
+                <Thumb.Template>
+                    <ControlTemplate>
+                        <Border 
+                            Background="#FF6BF3ED"
+                            CornerRadius="150" Height="300" Width="300" BorderBrush="#FF58B596" BorderThickness="1">
+                            <Border.RenderTransform>
+                                <RotateTransform CenterX="150" CenterY="150" Angle="{Binding Angle, FallbackValue=0}"/>
+                            </Border.RenderTransform>
+                            <Path HorizontalAlignment="Center"
+                                  VerticalAlignment="Top" 
+                                  Width="30"
+                                  Height="60"
+                                  Data="M 0,60 L 15,0 30,60 " Fill="#FF005559" Stroke="#FF00FFF3" StrokeThickness="2"/>
+                        </Border>
+                    </ControlTemplate>
+                </Thumb.Template>
+            </Thumb>
+        </Canvas>
+
+        <!-- Digital Timer -->
+        <TextBlock Foreground="White" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Run Text="{Binding Minutes,Mode=OneWay, FallbackValue=00}"/> <Run Text=":"/> <Run Text="{Binding Seconds,Mode=OneWay,FallbackValue=00}"/>
+        </TextBlock>
+        
+        <!-- Sleep Button -->
+        <Button Command="{Binding SleepCommand}" Grid.Row="1" Content="{Binding ButtonText}"/>
+
+
+    </Grid>
+</Window>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Go.To.Sleep"
         mc:Ignorable="d"
-        Title="Go To Sleep" MinHeight="600" MinWidth="400" Width="400" Icon="stopwatch_Enb_icon.ico">
+        Title="Go To Sleep" MinHeight="600" MinWidth="400" Width="420" Icon="stopwatch_Enb_icon.ico">
     <Grid MinWidth="400">
         <Grid.RowDefinitions>
             <RowDefinition Height="500"/>
@@ -13,38 +13,101 @@
         </Grid.RowDefinitions>
 
         <!-- Annotaitons -->
-        <ItemsControl ItemsSource="{Binding Annotations}">
+        <ItemsControl 
+            ItemsSource="{Binding Annotations}">
+            
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Width="400"/>
+                    <Canvas Background="AntiqueWhite" Width="400"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
                 <Style>
                     <Setter
                         Property="Canvas.Left"
-                        Value="190"
+                        Value="153"
                         />
                     <Setter
                         Property="Canvas.Top"
-                        Value="60"
+                        Value="70"
                         />
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="20" Height="30">
+                    <Grid                         
+                        Width="{Binding Width}"
+                        Height="{Binding Height}" 
+                        >
                         <Grid.RenderTransform>
-                            <RotateTransform CenterX="10" CenterY="190" Angle="{Binding Angle, FallbackValue=90}"/>
+                            <RotateTransform CenterX="{Binding CenterX}" CenterY="{Binding CenterY}" Angle="{Binding Angle, FallbackValue=0}"/>
                         </Grid.RenderTransform>
+                        <Path 
+                            Stroke="Red" 
+                            StrokeThickness=".5"
+                            Fill="blue"
+                            >
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure>
+                                        <LineSegment Point="{Binding Points[0]}" />
+                                        <LineSegment Point="{Binding Points[1]}" />
+                                        <ArcSegment 
+                                            SweepDirection="Clockwise" 
+                                            Size="{Binding Sizes[0]}"
+                                            Point="{Binding Points[2]}" />
+                                        <LineSegment Point="{Binding Points[3]}" />
+                                        <ArcSegment 
+                                            SweepDirection="Counterclockwise" 
+                                            Size="{Binding Sizes[1]}"
+                                            Point="{Binding Points[4]}" />
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Text}"/>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="."/>
                     </Grid>
+
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
+            <!--<ItemsControl.ItemsSource>
+                <CompositeCollection>
+                    <Grid Width="77.6457" Height="30" Background="Aqua">
+                        <Grid.RenderTransform>
+                            <RotateTransform CenterX="39" CenterY="190" Angle="{Binding Angle, FallbackValue=0}"/>
+                        </Grid.RenderTransform>
+                        <Path 
+                            Stroke="Red" 
+                            StrokeThickness=".5"
+                            >
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure>
+                                        <LineSegment Point="0,0" />
+                                        <LineSegment Point="0,30" />
+                                        <ArcSegment Point="0,30"/>  
+                                        <ArcSegment 
+                                            SweepDirection="Clockwise" 
+                                            Size="190,190" 
+                                            Point="20,30" />
+                                        <LineSegment Point="20,30" />
+                                        <LineSegment Point="20,0" />
+                                        <LineSegment Point="0,0" />
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Text}"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="."/>
+                    </Grid>
+
+                </CompositeCollection>
+            </ItemsControl.ItemsSource>-->
+
         </ItemsControl>
         
-        <!-- Handle -->
+        <!-- Handle --><!--
         <Canvas IsEnabled="{Binding Idle}" 
             Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Thumb Margin="-150 -150 0 0" 
@@ -68,7 +131,7 @@
                     </ControlTemplate>
                 </Thumb.Template>
             </Thumb>
-        </Canvas>
+        </Canvas>-->
 
         <!-- Digital Timer -->
         <TextBlock Foreground="White" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center">

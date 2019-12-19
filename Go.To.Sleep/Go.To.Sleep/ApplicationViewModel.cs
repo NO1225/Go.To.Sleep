@@ -120,7 +120,7 @@ namespace Go.To.Sleep
             Annotations = new ObservableCollection<Annotation>();
 
             // Giving values to the annotation, a minute for every 6 degrees 
-            for (int i = 0; i < 360; i += 6)
+            for (int i = 0; i < 360; i += 30)
             {
                 Annotations.Add(new Annotation() { Angle = i, Text = (i / 6).ToString() });
             }
